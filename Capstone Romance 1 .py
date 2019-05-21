@@ -106,14 +106,13 @@ df_books_o['rating_count_group'] = pd.qcut(df_books_o['int_rating_count'], 2, la
 
 # In[8]:
 
-
+#Create document matrix using CountVectorizer, then create tfidf matrix using TfIdfTransformer. 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 import numpy as np
 
-#y=df_books_o['rating_count_group']
 cv = CountVectorizer(ngram_range = (1,2), max_df = 0.65, min_df=0.0)
 tfidf = TfidfTransformer()
-#X_fit=cv.fit(df_books_o['filtered_desc'])
+
 X_fittrans = cv.fit_transform(df_books_o['filtered_desc'])
 X_fittrans = tfidf.fit_transform(X_fittrans)
 
@@ -121,29 +120,23 @@ X_fittrans = tfidf.fit_transform(X_fittrans)
 # In[9]:
 
 
-
+#add column to tfidf matrix with word count of description
 from scipy.sparse import hstack
 X_dtm = hstack((X_fittrans,np.array(df_books_o['desc_word_count'])[:,None]))
 X_dtm.tocsr()
-
-#new_desc_count = np.reshape(df_books_o['desc_word_count'].as_matrix(),(len(df_books_o),1))
-#.shape(new_desc_count)
-#X_withlen = np.concatenate([np.asarray(X_fittrans), new_desc_count], axis=1)                
-#np.shape(X_fittrans)
-#np.shape(X_withlen)
 
 
 # In[10]:
 
 
-#create testing and training sets, X is hte description and y is the rating count bin
+#create testing and training sets, X is the tfidf matrix and y is the rating count bin number
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X_dtm, df_books_o['rating_count_group'], test_size=0.3, random_state = 42)
 
 
 # In[11]:
 
-
+#classifier 1 - Logistic regression
 from sklearn.linear_model import LogisticRegression
 
 lr = LogisticRegression()
@@ -153,7 +146,7 @@ y_pred_lr = lr.predict(X_test)
 
 # In[12]:
 
-
+#Logistic regression results
 from sklearn.metrics import confusion_matrix 
 from sklearn.metrics import accuracy_score 
 from sklearn.metrics import classification_report 
@@ -169,7 +162,7 @@ print (classification_report(y_test, y_pred_lr))
 # In[13]:
 
 
-#classifier 1 Multinomial Naive Bayes
+#classifier 2 - Multinomial Naive Bayes
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
@@ -183,7 +176,7 @@ y_pred_nb = clf.predict(X_test)
 # In[14]:
 
 
-
+#Naive Bayes results
 results = confusion_matrix(y_test, y_pred_nb)
 print ('Confusion Matrix for Naive Bayes:')
 print(results) 
@@ -195,7 +188,7 @@ print (classification_report(y_test, y_pred_nb))
 # In[15]:
 
 
-#Classifier 2 Linear SVC
+#Classifier 3 - Linear SVC
 from sklearn.svm import LinearSVC
 clf = LinearSVC()
 
@@ -206,7 +199,7 @@ y_pred_svc = clf.predict(X_test)
 # In[16]:
 
 
-
+#Linear SVC results
 results = confusion_matrix(y_test, y_pred_svc)
 print ('Confusion Matrix for SVC:')
 print(results) 
@@ -218,7 +211,7 @@ print (classification_report(y_test, y_pred_svc))
 # In[17]:
 
 
-#classifier 3 SGD Classifier with result
+#classifier 4 - SGD Classifier
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.metrics import accuracy_score
@@ -233,7 +226,7 @@ y_pred_sgd = sgd.predict(X_test)
 # In[18]:
 
 
-
+#SGC results
 results = confusion_matrix(y_test, y_pred_sgd)
 print ('Confusion Matrix for SGD:')
 print(results) 
@@ -244,7 +237,7 @@ print (classification_report(y_test, y_pred_sgd))
 
 # In[23]:
 
-
+#ROC Area-under-curve score for classifiers 1-4
 from sklearn.metrics import roc_auc_score
 
 print("Logistic Reg. AUC: ", roc_auc_score(y_test.tolist(), y_pred_lr.tolist()))
@@ -255,7 +248,7 @@ print("SGD AUC: ", roc_auc_score(y_test.tolist(), y_pred_sgd.tolist()))
 
 # In[27]:
 
-
+#log loss score for classifiers 1-4
 from sklearn.metrics import log_loss
 
 print("Logistic Reg. Log-Loss: ", log_loss(y_test.tolist(), y_pred_lr.tolist()))
@@ -266,7 +259,7 @@ print("SGD Log-Loss: ", log_loss(y_test.tolist(), y_pred_sgd.tolist()))
 
 # In[11]:
 
-
+#classifier 5 - Neural Network (without wordcount column)
 from sklearn.model_selection import train_test_split
 X_train_nn, X_test_nn, y_train_nn, y_test_nn = train_test_split(df_books_o['filtered_desc'], df_books_o['rating_count_group'],
                                                                 test_size=0.3, random_state = 42)
@@ -293,7 +286,7 @@ y_pred_nn = model.predict_classes(vectorizer.transform(X_test_nn))
 
 # In[15]:
 
-
+#Neural Network results
 from sklearn.metrics import confusion_matrix 
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
