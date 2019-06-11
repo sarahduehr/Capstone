@@ -33,12 +33,13 @@ In conclusion this data was difficult to classify using machine learning algorit
 ## Results:
 Romance Books:
 
-Classifier              Accuracy Score    Precision   Recall    F1 Score    ROC AUC
-Logistic Regression     0.5988            0.6         0.6       0.6         0.599
-Multinomial Naïve Bayes 0.5069            0.59        0.51      0.35        0.504
-Linear SVC              0.5219            0.59        0.52      0.41        0.5192
-SGD                     0.4970            0.5         0.5       0.33        0.5
-NN                      0.497             0.25        0.5       0.33        0.5
+| Classifier              |  Accuracy Score  |  Precision  | Recall   | F1 Score   | ROC AUC  |
+|-------------------------|------------------|-------------|----------|------------|----------|
+| Logistic Regression     |  0.5988          |  0.6        | 0.6      | 0.6        | 0.599    |
+| Multinomial Naïve Bayes |  0.5069          |  0.59       | 0.51     | 0.35       | 0.504    |
+| Linear SVC              |  0.5219          |  0.59       | 0.52     | 0.41       | 0.5192   |
+| SGD                     |  0.4970          |  0.5        | 0.5      | 0.33       | 0.5      |
+| NN                      |  0.497           |  0.25       | 0.5      | 0.33       | 0.5      |
 
 
 Children’s Books:
