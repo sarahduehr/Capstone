@@ -21,7 +21,9 @@ The data was from the most popular site for book readers, GoodReads.com. The pro
 1.	Analyzing the text using the bag-of-words method to create a corpus of words used in all the book descriptions. 
 2.	Creating topics from the text by using CountVectorizer() and TfIdfVectorizer() from the scikit-learn library. CountVectorizer() creates a document term matrix, where every row is a book description and every column in a term used in all the book descriptions. The matrix contains 1’s whenever that row’s document contains that column’s term. The TfIdfVectorizer() method takes the document term matrix and converts it into tf-idf representation. Tf-Idf stands for term frequency times inverse document frequency. This method is useful when the documents contain a lot of very frequent terms, as is true in this project.
 
-### The model building phase consisted of splitting the data into 70% training data and 30% test data. Then building five different classifiers: logistic regression, multinomial naïve bayes, linear support vector machine, stochastic gradient descent, and a sequential neural network. The first four were given the word count variable but I was unable to configure the neural network to incorporate it. The most successful classifier was logistic regression.
+### The model building phase consisted of:
+1. Splitting the data into 70% training data and 30% test data. 
+2. Building five different classifiers: logistic regression, multinomial naïve bayes, linear support vector machine, stochastic gradient descent, and a sequential neural network. The first four were given the word count variable but I was unable to configure the neural network to incorporate it. The most successful classifier was logistic regression.
 
 ## Evaluation: 
 This project used six evaluation metrics to determine how accurate the models were at predicting the number of book ratings: confusion matrix, accuracy percentage, precision, recall, f1-score, and ROC area-under-curve score. Below a table of the results for each classifier for easy comparison. After seeing the results for the romance genre books, I also ran the classifiers on the children’s genre books to see if the classifiers were more accurate. I thought the descriptions for children’s books might be simpler and therefore easier to classify.
@@ -31,12 +33,12 @@ In conclusion this data was difficult to classify using machine learning algorit
 ## Results:
 Romance Books:
 
-Classifier      		Accuracy Score	  Precision	Recall	F1 Score	ROC AUC
-Logistic Regression		0.5988	       0.6	     0.6   	0.6	     0.599
-Multinomial Naïve Bayes	0.5069	       0.59	     0.51	     0.35	     0.504
-Linear SVC		     0.5219	       0.59	     0.52	     0.41	     0.5192
-SGD			          0.4970	       0.5	     0.5	     0.33	     0.5
-NN			          0.497	       0.25	     0.5	     0.33	     0.5
+Classifier              Accuracy Score    Precision   Recall    F1 Score    ROC AUC
+Logistic Regression     0.5988            0.6         0.6       0.6         0.599
+Multinomial Naïve Bayes 0.5069            0.59        0.51      0.35        0.504
+Linear SVC              0.5219            0.59        0.52      0.41        0.5192
+SGD                     0.4970            0.5         0.5       0.33        0.5
+NN                      0.497             0.25        0.5       0.33        0.5
 
 
 Children’s Books:
