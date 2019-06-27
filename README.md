@@ -13,7 +13,7 @@ The data was from the most popular site for book readers, GoodReads.com. The pro
 3.	 Reducing to only features needed: review count, average rating, description and rating count. 
 4.	Using BeautifulSoup to identify and remove the HTML tags left from GoodReads website. 
 5.	Preparing text by removing the punctuation and stop words (“the”, “of”, “and” etc.) and stemming and lemmatizing the remaining words. I used NLTK for this. 
-6.	Removing outliers with a lot of ratings. I removed any books with rating counts three or more standard distributions from the mean number of rating counts. 
+6.	Removing outliers with a lot of ratings. I removed any books with rating counts three or more standard deviations from the mean number of rating counts. 
 7.	Grouping the rating counts into bins. At first I tried ten bins, then five, and finally just two. 
 8.	Adding a feature with the word count of the descriptions. 
 
